@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(app.get('port'), () => console.log("Webhook server is listening, port", app.get('port')));
 app.get('/', function (req, res) {
-   res.send('RIPE_BOT_VERIFY_TOKEN')
+   res.send(req.query["hub.challenge"];)
  })
 const verificationController = require("./verification");
 const messageWebhookController = require("./messageWebhook");
