@@ -48,6 +48,6 @@ console.log("SK: sender ID is "+senderId);
   // });
   // apiaiSession.on("error", error => console.log(error));
   // apiaiSession.end();
-};
 }
+};
 // interactive(wit);
