@@ -24,30 +24,20 @@ module.exports = (event) => {
   const senderId = event.sender.id;
   const message = event.message.text;
 
-  if(message == "hi"){
-    console.log("Hi there, how are you");
-    sendTextMessage(senderId, "Hi there, how are you");
-  }else{
-console.log("SK: sender ID is "+senderId);
-
-  wit.message(message).then(({entities}) => {
-    // You can customize your response to these entities
-
+  if(message){
     console.log("SK: sender ID is "+senderId);
-    console.log(entities);
-    // For now, let's reply with another automatic message
-    sendTextMessage(senderId, "We've received your message: "+message+".");
-  })
-  .catch((err) => {
-    console.error("Oops! Got an error from Wit: ", err.stack || err);
-  })
-  // const apiaiSession = apiAiClient.textRequest(message, {sessionId: "ripebot2019"});
-  // apiaiSession.on("response", (response) => {
-  //   const result = response.result.fulfillment.speech;
-  //   sendTextMessage(senderId, result);
-  // });
-  // apiaiSession.on("error", error => console.log(error));
-  // apiaiSession.end();
-}
+
+    wit.message(message).then(({entities}) => {
+      // You can customize your response to these entities
+
+      console.log("SK: sender ID is "+senderId);
+      console.log(entities);
+      // For now, let's reply with another automatic message
+      sendTextMessage(senderId, "We've received your message: "+message+".");
+    })
+    .catch((err) => {
+      console.error("Oops! Got an error from Wit: ", err.stack || err);
+    })
+  }
 };
 // interactive(wit);
