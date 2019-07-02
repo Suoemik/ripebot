@@ -1,5 +1,5 @@
 const processMessage = require("./processMessage");
-const processMessage = require("./processPostback");
+const processPostback = require("./processPostback");
 module.exports = (req, res) => {
   if (req.body.object === "page") {
     req.body.entry.forEach(entry => {
