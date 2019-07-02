@@ -50,4 +50,4 @@ console.log("SK: sender ID is "+senderId);
   // apiaiSession.end();
 };
 }
-interactive(wit);
+// interactive(wit);
