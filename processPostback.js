@@ -42,7 +42,7 @@ module.exports = (event) => {
         name = bodyObj.first_name;
         greeting = "Hi " + name + ". ";
       }
-      var message = greeting + "Hi there, how are you";
+      var message = greeting + "What grocery item would you like to know about?";
       sendMessage(senderId, message);
     });
   }
