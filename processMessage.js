@@ -36,7 +36,7 @@ console.log("SK: sender ID is "+senderId);
     console.log("SK: sender ID is "+senderId);
     console.log(entities);
     // For now, let's reply with another automatic message
-    sendTextMessage(senderId, "We've received your message: ${text}.");
+    sendTextMessage(senderId, "We've received your message: "+message+".");
   })
   .catch((err) => {
     console.error("Oops! Got an error from Wit: ", err.stack || err);
