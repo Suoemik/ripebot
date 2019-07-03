@@ -7,10 +7,13 @@ const interactive = require('node-wit').interactive;
 const firebase = require('firebase');
 
 const fireapp = firebase.initializeApp({
-  apiKey: "AIzaSyArsEa2dDk3UO7grT7cHHKFh9hRF3mEWgM",                             // Auth / General Use
-  authDomain: "ripe-2019.firebaseapp.com",         // Auth with popup/redirect
-  databaseURL: "https://ripe-2019.firebaseio.com", // Realtime Database
-});
+  apiKey: "AIzaSyAxYwEWt7ApF0h-3k42x7YPMW0iJLWYH6g",                             // Auth / General Use
+  authDomain: "ripe-website.firebaseapp.com",         // Auth with popup/redirect
+  databaseURL: "https://ripe-website.firebaseio.com", // Realtime Database
+  storageBucket: "ripe-website.appspot.com",          // Storage
+  messagingSenderId: "1004358778912",                  // Cloud Messaging});
+  appId: "1:1004358778912:web:fb9ddf8ab0757e22"
+})
 
 const wit = new Wit({
   accessToken: API_AI_TOKEN,
