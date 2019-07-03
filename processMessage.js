@@ -4,6 +4,15 @@ const FACEBOOK_ACCESS_TOKEN = "EAAiBKzzP6RwBAGddy8vEovhklyPnUNFGv7JMh61JZA2lfxIb
 const request = require("request");
 const {Wit, log} = require('node-wit');
 const interactive = require('node-wit').interactive;
+const firebase = require('firebase');
+
+const fireapp = firebase.initializeApp({
+  apiKey: "AIzaSyAxYwEWt7ApF0h-3k42x7YPMW0iJLWYH6g",                             // Auth / General Use
+  authDomain: "ripe-2019.firebaseapp.com",         // Auth with popup/redirect
+  databaseURL: "https://ripe-2019.firebaseio.com", // Realtime Database
+  storageBucket: "ripe-2019.appspot.com",          // Storage
+  messagingSenderId: "1004358778912"                  // Cloud Messaging
+});
 
 const wit = new Wit({
   accessToken: API_AI_TOKEN,
