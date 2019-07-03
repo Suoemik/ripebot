@@ -3,15 +3,15 @@
 import './firebase-app.js';
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyArsEa2dDk3UO7grT7cHHKFh9hRF3mEWgM",
-  authDomain: "ripe-2019.firebaseapp.com",
-  databaseURL: "https://ripe-2019.firebaseio.com",
-  projectId: "ripe-2019",
-  storageBucket: "ripe-2019.appspot.com",
-  messagingSenderId: "151655632550",
-  appId: "1:151655632550:web:0151053bce277897"
-};
+  var firebaseConfig = {
+    apiKey: "AIzaSyAxYwEWt7ApF0h-3k42x7YPMW0iJLWYH6g",
+    authDomain: "ripe-website.firebaseapp.com",
+    databaseURL: "https://ripe-website.firebaseio.com",
+    projectId: "ripe-website",
+    storageBucket: "ripe-website.appspot.com",
+    messagingSenderId: "1004358778912",
+    appId: "1:1004358778912:web:fb9ddf8ab0757e22"
+  };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
