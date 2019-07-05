@@ -42,7 +42,12 @@ module.exports = (event) => {
 
       console.log("SK: sender ID is "+senderId);
       console.log(entities);
+      console.log(entities.entities);
       // For now, let's reply with another automatic message
+      if(entities["entities"]["greetings"].length > 0 && entities["entities"]["greetings"][0].value){
+        console.log("Hi there! What grocery item would you like to know about?");
+        sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
+      }
       sendTextMessage(senderId, "We've received your message: "+message+".");
     })
     .catch((err) => {
@@ -50,4 +55,4 @@ module.exports = (event) => {
     })
   }
 };
-// interactive(wit);
+interactive(wit);
