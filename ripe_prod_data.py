@@ -30,12 +30,12 @@ with open('prod_data.json', 'r') as p:
     prod_json_dict = json.load(p)
 
 print(prod_json_dict[0])
-cred = credentials.Certificate('./ripe-2019-firebase-adminsdk-dmfqz-1584d2cb24.json')
+cred = credentials.Certificate('./ripe-website-firebase-adminsdk-jj6qe-a38bc3f7ca-2.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL' : 'https://ripe-2019.firebaseio.com'
+    'databaseURL' : 'https://ripe-website.firebaseio.com'
 })
 
 root = db.reference('Produce')
 
-for i in 
+
 root.set(prod_json_dict)
