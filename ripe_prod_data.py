@@ -37,5 +37,5 @@ firebase_admin.initialize_app(cred, {
 
 root = db.reference('Produce')
 
-
-root.set(prod_json_dict)
+for i in prod_json_dict:
+    root.child(i['Item'].strip()).set(i)

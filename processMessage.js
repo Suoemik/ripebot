@@ -4,21 +4,35 @@ const FACEBOOK_ACCESS_TOKEN = "EAAiBKzzP6RwBAGddy8vEovhklyPnUNFGv7JMh61JZA2lfxIb
 const request = require("request");
 const {Wit, log} = require('node-wit');
 const interactive = require('node-wit').interactive;
-const firebase = require('firebase');
+const firebase = require('firebase-admin');
+const servacc = require('./ripe-website-firebase-adminsdk-jj6qe-a38bc3f7ca-2.json');
 
 const fireapp = firebase.initializeApp({
-  apiKey: "AIzaSyAxYwEWt7ApF0h-3k42x7YPMW0iJLWYH6g",                             // Auth / General Use
-  authDomain: "ripe-website.firebaseapp.com",         // Auth with popup/redirect
   databaseURL: "https://ripe-website.firebaseio.com", // Realtime Database
-  storageBucket: "ripe-website.appspot.com",          // Storage
-  messagingSenderId: "1004358778912",                  // Cloud Messaging});
-  appId: "1:1004358778912:web:fb9ddf8ab0757e22"
+  credential: firebase.credential.cert(servacc)
 })
+
+const db = firebase.database();
+const dairydict = db.ref('Dairy');
+var dairyvals = null;
+const proddict = db.ref('Produce');
+var prodvals = null;
+
+dairydict.once("value").then(function(snapshot) {
+  dairyvals = snapshot.val();
+  console.log(dairyvals["Almond Milk"]);
+});
+
+proddict.once("value").then(function(snapshot) {
+  prodvals = snapshot.val();
+  console.log(prodvals["Fresh Kale"]);
+});
 
 const wit = new Wit({
   accessToken: API_AI_TOKEN,
   logger: new log.Logger(log.INFO)
 });
+
 const sendTextMessage = (senderId, text) => {
   request({
     url: "https://graph.facebook.com/v2.6/me/messages",
@@ -30,6 +44,7 @@ const sendTextMessage = (senderId, text) => {
     }
   });
 };
+
 module.exports = (event) => {
   const senderId = event.sender.id;
   const message = event.message.text;
@@ -47,12 +62,33 @@ module.exports = (event) => {
       if(entities.greetings[0].value == "true"){
         console.log("Hi there! What grocery item would you like to know about?");
         sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
-      }
-      sendTextMessage(senderId, "We've received your message: "+message+".");
+      }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
+        if(entities.food_type[0].value != ""){
+
+          dairydict.once("value").then(function(snapshot) {
+            dairyvals = snapshot.val();
+            for(var d in dairyvals){
+              if(d.includes(entities.food_type[0].value)){
+                sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
+              }
+            }
+          });
+
+          proddict.once("value").then(function(snapshot) {
+            prodvals = snapshot.val();
+            for(var p in prodvals){
+              if(p.includes(entities.food_type[0].value)){
+                sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
+              }
+            }
+          });
+        }
+      }else sendTextMessage(senderId, "We've received your message: "+message+".");
     })
     .catch((err) => {
       console.error("Oops! Got an error from Wit: ", err.stack || err);
     })
   }
 };
-//interactive(wit);
+//
+interactive(wit);
