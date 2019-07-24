@@ -63,14 +63,15 @@ module.exports = (event) => {
         console.log("Hi there! What grocery item would you like to know about?");
         sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
       }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
+        console.log(entities.food_type[0].value);
         if(entities.food_type[0].value != ""){
-
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
             for(var d in dairyvals){
               if(d.includes(entities.food_type[0].value)){
+
                 sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
-              }
+              }else sendTextMessage(senderId, "Query not found in database");
             }
           });
 
@@ -79,10 +80,10 @@ module.exports = (event) => {
             for(var p in prodvals){
               if(p.includes(entities.food_type[0].value)){
                 sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
-              }
+              }else sendTextMessage(senderId, "Query not found in database");
             }
           });
-        }
+        }else sendTextMessage(senderId, "Query not found in database");
       }else sendTextMessage(senderId, "We've received your message: "+message+".");
     })
     .catch((err) => {
