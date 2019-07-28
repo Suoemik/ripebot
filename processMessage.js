@@ -20,6 +20,9 @@ var prodvals = null;
 
 dairydict.once("value").then(function(snapshot) {
   dairyvals = snapshot.val();
+  // for(var d in dairyvals){
+  //   console.log(d.toLowerCase().includes("milk"));
+  // }
   console.log(dairyvals["Almond Milk"]);
 });
 
@@ -68,8 +71,8 @@ module.exports = (event) => {
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
             for(var d in dairyvals){
-              if(d.includes(entities.food_type[0].value)){
-
+              if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
+                console.log("These are the results of your query: "+entities.food_type[0].value);
                 sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
               }else sendTextMessage(senderId, "Query not found in database");
             }
@@ -78,7 +81,8 @@ module.exports = (event) => {
           proddict.once("value").then(function(snapshot) {
             prodvals = snapshot.val();
             for(var p in prodvals){
-              if(p.includes(entities.food_type[0].value)){
+              if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
+                console.log("These are the results of your query: "+entities.food_type[0].value);
                 sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
               }else sendTextMessage(senderId, "Query not found in database");
             }
