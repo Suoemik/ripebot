@@ -68,8 +68,6 @@ module.exports = (event) => {
           sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
         }
       }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
-        //sendTextMessage(senderId, "These are the results of your query: "+entities.food_type[0].value+".");
-          sendTextMessage(senderId, "Entity exists with length of : "+entities.food_type.length+".");
         if(entities.food_type[0].value != ""){
           sendTextMessage(senderId, "These are the results of your query: "+entities.food_type[0].value+".");
 
@@ -79,7 +77,7 @@ module.exports = (event) => {
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
                 sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
-              }else sendTextMessage(senderId, "Query not found in database");
+              }
             }
           });
 
@@ -89,11 +87,11 @@ module.exports = (event) => {
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
                 sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
-              }else sendTextMessage(senderId, "Query not found in database");
+              }
             }
           });
-        }else sendTextMessage(senderId, "Query not found in database");
-      }else sendTextMessage(senderId, "We've received your message: "+message+".");
+        }
+      }else sendTextMessage(senderId, "Query not found in database");
     })
     .catch((err) => {
       console.error("Oops! Got an error from Wit: ", err.stack || err);
