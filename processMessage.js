@@ -62,11 +62,11 @@ module.exports = (event) => {
       // console.log(entities);
       console.log(entities);
       // For now, let's reply with another automatic message
-      if(entities.greetings[0].value == "true"){
-        console.log("Hi there! What grocery item would you like to know about?");
-        sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
-      }else if(entities.help[0].value == "know" || entities.help[0].value == "about"){
-        sendTextMessage(senderId, "You would like help?");
+      if(entities.hasOwnProperty("greetings") && entities.greetings.length > 0){
+        if(entities.greetings[0].value == "true"){
+          console.log("Hi there! What grocery item would you like to know about?");
+          sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
+        }
       }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
         //sendTextMessage(senderId, "These are the results of your query: "+entities.food_type[0].value+".");
           sendTextMessage(senderId, "Entity exists with length of : "+entities.food_type.length+".");
