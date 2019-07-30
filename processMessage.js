@@ -103,7 +103,7 @@ module.exports = (event) => {
                   }
                 };
                 // sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
-                sendTextMessage(senderId, drop_msg);
+                sendMessage(senderId, drop_msg);
               }
             }
           });
@@ -140,7 +140,7 @@ module.exports = (event) => {
                   }
                 };
                 // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
-                sendTextMessage(senderId, drop_msg);
+                sendMessage(senderId, drop_msg);
 
               }
             }
