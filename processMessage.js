@@ -85,11 +85,15 @@ module.exports = (event) => {
 
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
+            var count = 0;
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-
-                var drop_msg = {
+                count++;
+              }
+            }
+            if(count > 0){
+              var drop_msg = {
                   attachment: {
                     type: "template",
                     payload: {
@@ -116,45 +120,46 @@ module.exports = (event) => {
                 };
                 // sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
                 sendMessage(senderId, drop_msg);
-              }
             }
           });
 
           proddict.once("value").then(function(snapshot) {
             prodvals = snapshot.val();
+            var count = 0;
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-
-                var drop_msg = {
-                  attachment: {
-                    type: "template",
-                    payload: {
-                      template_type: "button",
-                        buttons: [{
-                          type: "postback",
-                          title: "Expiration",
-                          payload: "Exp"
-                        }, {
-                          type: "postback",
-                          title: "Nutrition",
-                          payload: "Nut"
-                        }, {
-                          type: "postback",
-                          title: "Deals",
-                          payload: "Deal"
-                        }, {
-                          type: "postback",
-                          title: "Recipes/Cooking",
-                          payload: "Rec"
-                        }]
-                    }
-                  }
-                };
-                // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
-                sendMessage(senderId, drop_msg);
-
+                count++;
               }
+            }
+            if(count > 0){
+              var drop_msg = {
+              attachment: {
+                type: "template",
+                payload: {
+                  template_type: "button",
+                    buttons: [{
+                      type: "postback",
+                      title: "Expiration",
+                      payload: "Exp"
+                    }, {
+                      type: "postback",
+                      title: "Nutrition",
+                      payload: "Nut"
+                    }, {
+                      type: "postback",
+                      title: "Deals",
+                      payload: "Deal"
+                    }, {
+                      type: "postback",
+                      title: "Recipes/Cooking",
+                      payload: "Rec"
+                    }]
+                }
+              }
+            };
+            // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
+            sendMessage(senderId, drop_msg);
             }
           });
         }
