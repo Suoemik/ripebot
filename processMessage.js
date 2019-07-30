@@ -69,14 +69,41 @@ module.exports = (event) => {
         }
       }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
         if(entities.food_type[0].value != ""){
-          sendTextMessage(senderId, "These are the results of your query: "+entities.food_type[0].value+".");
+          // sendTextMessage(senderId, "These are the results of your query: "+entities.food_type[0].value+".");
 
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-                sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
+
+                var drop_msg = {
+                  attachment: {
+                    type: "template",
+                    payload: {
+                      template_type: "button",
+                        buttons: [{
+                          type: "postback",
+                          title: "Expiration",
+                          payload: "Exp"
+                        }, {
+                          type: "postback",
+                          title: "Nutrition",
+                          payload: "Nut"
+                        }, {
+                          type: "postback",
+                          title: "Deals",
+                          payload: "Deal"
+                        }, {
+                          type: "postback",
+                          title: "Recipes/Cooking",
+                          payload: "Rec"
+                        }]
+                    }
+                  }
+                };
+                // sendTextMessage(senderId, "These are the results of your query: "+dairyvals[d]+".");
+                sendTextMessage(senderId, drop_msg);
               }
             }
           });
@@ -86,7 +113,35 @@ module.exports = (event) => {
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-                sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
+
+                var drop_msg = {
+                  attachment: {
+                    type: "template",
+                    payload: {
+                      template_type: "button",
+                        buttons: [{
+                          type: "postback",
+                          title: "Expiration",
+                          payload: "Exp"
+                        }, {
+                          type: "postback",
+                          title: "Nutrition",
+                          payload: "Nut"
+                        }, {
+                          type: "postback",
+                          title: "Deals",
+                          payload: "Deal"
+                        }, {
+                          type: "postback",
+                          title: "Recipes/Cooking",
+                          payload: "Rec"
+                        }]
+                    }
+                  }
+                };
+                // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
+                sendTextMessage(senderId, drop_msg);
+
               }
             }
           });

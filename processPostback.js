@@ -45,5 +45,13 @@ module.exports = (event) => {
       var message = greeting + "What grocery item would you like to know about?";
       sendMessage(senderId, message);
     });
+  } else if (payload === "Exp") {
+    sendMessage(senderId, "Expiration Date");
+  } else if (payload === "Nut") {
+    sendMessage(senderId, "Nutrition Information");
+  } else if (payload === "Deal") {
+    sendMessage(senderId, "Deals");
+  } else if (payload === "Rec") {
+    sendMessage(senderId, "Recipes or Cooking Information");
   }
 };
