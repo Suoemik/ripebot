@@ -9,14 +9,14 @@ const wit = new Wit({
   accessToken: API_AI_TOKEN,
   logger: new log.Logger(log.INFO)
 });
-const sendMessage = (senderId, text) => {
+const sendMessage = (senderId, msg) => {
   request({
     url: "https://graph.facebook.com/v2.6/me/messages",
     qs: { access_token: FACEBOOK_ACCESS_TOKEN },
     method: "POST",
     json: {
       recipient: { id: senderId },
-      message: { text },
+      message: msg,
     }
   });
 };
@@ -43,15 +43,15 @@ module.exports = (event) => {
         greeting = "Hi " + name + ". ";
       }
       var message = greeting + "What grocery item would you like to know about?";
-      sendMessage(senderId, message);
+      sendMessage(senderId, {text: message});
     });
   } else if (payload === "Exp") {
-    sendMessage(senderId, "Expiration Date");
+    sendMessage(senderId, {text: "Expiration Date"});
   } else if (payload === "Nut") {
-    sendMessage(senderId, "Nutrition Information");
+    sendMessage(senderId, {text: "Nutrition Information"});
   } else if (payload === "Deal") {
-    sendMessage(senderId, "Deals");
+    sendMessage(senderId, {text: "Deals"});
   } else if (payload === "Rec") {
-    sendMessage(senderId, "Recipes or Cooking Information");
+    sendMessage(senderId, {text: "Recipes or Cooking Information"});
   }
 };
