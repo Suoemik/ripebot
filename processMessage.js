@@ -45,6 +45,10 @@ const sendTextMessage = (senderId, text) => {
       recipient: { id: senderId },
       message: { text },
     }
+  }, function(error, response, body) {
+    if (error) {
+      console.log("Error sending message: " + response.error);
+    }
   });
 };
 
@@ -92,28 +96,33 @@ module.exports = (event) => {
                 count++;
               }
             }
+            console.log("Dairy count is: "+count);
+
             if(count > 0){
+
+              console.log("Dairy count is greater than 0");
               var drop_msg = {
-                  attachment: {
-                    type: "template",
-                    payload: {
-                      template_type: "button",
-                        buttons: [{
-                          type: "postback",
-                          title: "Expiration",
-                          payload: "Exp"
+                  "attachment": {
+                    "type": "template",
+                    "payload": {
+                      "template_type": "button",
+                      "text":"Choose one",
+                        "buttons": [{
+                          "type": "postback",
+                          "title": "Expiration",
+                          "payload": "Exp"
                         }, {
-                          type: "postback",
-                          title: "Nutrition",
-                          payload: "Nut"
+                          "type": "postback",
+                          "title": "Nutrition",
+                          "payload": "Nut"
                         }, {
-                          type: "postback",
-                          title: "Deals",
-                          payload: "Deal"
+                          "type": "postback",
+                          "title": "Deals",
+                          "payload": "Deal"
                         }, {
-                          type: "postback",
-                          title: "Recipes/Cooking",
-                          payload: "Rec"
+                          "type": "postback",
+                          "title": "Recipes/Cooking",
+                          "payload": "Rec"
                         }]
                     }
                   }
@@ -132,32 +141,37 @@ module.exports = (event) => {
                 count++;
               }
             }
+            console.log("Prod count is: "+count);
+
             if(count > 0){
+
+              console.log("Prod count is greater than 0");
               var drop_msg = {
-              attachment: {
-                type: "template",
-                payload: {
-                  template_type: "button",
-                    buttons: [{
-                      type: "postback",
-                      title: "Expiration",
-                      payload: "Exp"
-                    }, {
-                      type: "postback",
-                      title: "Nutrition",
-                      payload: "Nut"
-                    }, {
-                      type: "postback",
-                      title: "Deals",
-                      payload: "Deal"
-                    }, {
-                      type: "postback",
-                      title: "Recipes/Cooking",
-                      payload: "Rec"
-                    }]
-                }
-              }
-            };
+                  "attachment": {
+                    "type": "template",
+                    "payload": {
+                      "template_type": "button",
+                      "text":"Choose one",
+                        "buttons": [{
+                          "type": "postback",
+                          "title": "Expiration",
+                          "payload": "Exp"
+                        }, {
+                          "type": "postback",
+                          "title": "Nutrition",
+                          "payload": "Nut"
+                        }, {
+                          "type": "postback",
+                          "title": "Deals",
+                          "payload": "Deal"
+                        }, {
+                          "type": "postback",
+                          "title": "Recipes/Cooking",
+                          "payload": "Rec"
+                        }]
+                    }
+                  }
+              };
             // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
             sendMessage(senderId, drop_msg);
             }
