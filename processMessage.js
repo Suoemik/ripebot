@@ -61,6 +61,10 @@ const sendMessage = (senderId, msg) => {
       recipient: { id: senderId },
       message: msg,
     }
+  }, function(error, response, body) {
+    if (error) {
+      console.log("Error sending message: " + response.error);
+    }
   });
 };
 
