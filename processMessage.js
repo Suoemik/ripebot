@@ -36,21 +36,21 @@ const wit = new Wit({
   logger: new log.Logger(log.INFO)
 });
 
-const sendTextMessage = (senderId, text) => {
-  request({
-    url: "https://graph.facebook.com/v2.6/me/messages",
-    qs: { access_token: FACEBOOK_ACCESS_TOKEN },
-    method: "POST",
-    json: {
-      recipient: { id: senderId },
-      message: { text },
-    }
-  }, function(error, response, body) {
-    if (error) {
-      console.log("Error sending message: " + response.error);
-    }
-  });
-};
+// const sendTextMessage = (senderId, text) => {
+//   request({
+//     url: "https://graph.facebook.com/v2.6/me/messages",
+//     qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+//     method: "POST",
+//     json: {
+//       recipient: { id: senderId },
+//       message: { text },
+//     }
+//   }, function(error, response, body) {
+//     if (error) {
+//       console.log("Error sending message: " + response.error);
+//     }
+//   });
+// };
 
 const sendMessage = (senderId, msg) => {
   request({
@@ -85,7 +85,7 @@ module.exports = (event) => {
       if(entities.hasOwnProperty("greetings") && entities.greetings.length > 0){
         if(entities.greetings[0].value == "true"){
           console.log("Hi there! What grocery item would you like to know about?");
-          sendTextMessage(senderId, "Hi there! What grocery item would you like to know about?");
+          sendMessage(senderId, {text: "Hi there! What grocery item would you like to know about?"});
         }
       }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
         if(entities.food_type[0].value != ""){
