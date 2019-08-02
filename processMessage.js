@@ -177,7 +177,9 @@ module.exports = (event) => {
                   }
               };
             // sendTextMessage(senderId, "These are the results of your query: "+prodvals[p]+".");
-            sendMessage(senderId, drop_msg);
+              console.log(senderId+": "+JSON.stringify(drop_msg));
+              sendMessage(senderId, drop_msg);
+              console.log(senderId+": "+JSON.stringify(drop_msg));
             }
           });
         }
