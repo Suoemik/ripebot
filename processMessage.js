@@ -123,11 +123,13 @@ module.exports = (event) => {
                           "type": "postback",
                           "title": "Deals",
                           "payload": "Deal"
-                        }, {
-                          "type": "postback",
-                          "title": "Recipes/Cooking",
-                          "payload": "Rec"
-                        }]
+                        }
+//                                     , {
+//                           "type": "postback",
+//                           "title": "Recipes/Cooking",
+//                           "payload": "Rec"
+//                         }
+                                   ]
                     }
                   }
                 };
@@ -168,11 +170,13 @@ module.exports = (event) => {
                           "type": "postback",
                           "title": "Deals",
                           "payload": "Deal"
-                        }, {
-                          "type": "postback",
-                          "title": "Recipes/Cooking",
-                          "payload": "Rec"
-                        }]
+                        }
+//                                     , {
+//                           "type": "postback",
+//                           "title": "Recipes/Cooking",
+//                           "payload": "Rec"
+//                         }
+                                   ]
                     }
                   }
               };
