@@ -54,7 +54,7 @@ const wit = new Wit({
 
 const sendMessage = (senderId, msg) => {
   request({
-    url: "https://graph.facebook.com/v2.6/me/messages",
+    url: "https://graph.facebook.com/v4.0/me/messages",
     qs: { access_token: FACEBOOK_ACCESS_TOKEN },
     method: "POST",
     json: {
