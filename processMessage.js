@@ -107,7 +107,7 @@ module.exports = (event) => {
 
               console.log("Dairy count is greater than 0");
               var drop_msg = {
-                "text": "Pick a color:",
+                "text": "Choose one:",
                 "quick_replies":[
                   {
                     "content_type":"text",
@@ -148,7 +148,7 @@ module.exports = (event) => {
 
               console.log("Prod count is greater than 0");
               var drop_msg = {
-                "text": "Pick a color:",
+                "text": "Choose one:",
                 "quick_replies":[
                   {
                     "content_type":"text",
