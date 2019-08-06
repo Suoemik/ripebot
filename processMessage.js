@@ -54,7 +54,7 @@ const wit = new Wit({
 
 const sendMessage = (senderId, msg) => {
   request({
-    url: "https://graph.facebook.com/v2.6/me/messages",
+    url: "https://graph.facebook.com/v4.0/me/messages",
     qs: { access_token: FACEBOOK_ACCESS_TOKEN },
     method: "POST",
     json: {
@@ -123,11 +123,13 @@ module.exports = (event) => {
                           "type": "postback",
                           "title": "Deals",
                           "payload": "Deal"
-                        }, {
-                          "type": "postback",
-                          "title": "Recipes/Cooking",
-                          "payload": "Rec"
-                        }]
+                        }
+//                                     , {
+//                           "type": "postback",
+//                           "title": "Recipes/Cooking",
+//                           "payload": "Rec"
+//                         }
+                                   ]
                     }
                   }
                 };
@@ -168,11 +170,13 @@ module.exports = (event) => {
                           "type": "postback",
                           "title": "Deals",
                           "payload": "Deal"
-                        }, {
-                          "type": "postback",
-                          "title": "Recipes/Cooking",
-                          "payload": "Rec"
-                        }]
+                        }
+//                                     , {
+//                           "type": "postback",
+//                           "title": "Recipes/Cooking",
+//                           "payload": "Rec"
+//                         }
+                                   ]
                     }
                   }
               };
