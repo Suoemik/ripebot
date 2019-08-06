@@ -76,6 +76,16 @@ module.exports = (event) => {
   if(message){
     console.log("SK: sender ID is "+senderId);
 
+    if (message === "Exp") {
+      sendMessage(senderId, {text: "Expiration Date"});
+    } else if (message === "Nut") {
+      sendMessage(senderId, {text: "Nutrition Information"});
+    } else if (message === "Deal") {
+      sendMessage(senderId, {text: "Deals"});
+    } else if (message === "Rec") {
+      sendMessage(senderId, {text: "Recipes or Cooking Information"});
+    }
+  
     wit.message(message).then(({entities}) => {
       // You can customize your response to these entities
 
