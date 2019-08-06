@@ -36,21 +36,22 @@ const wit = new Wit({
   logger: new log.Logger(log.INFO)
 });
 
-// const sendTextMessage = (senderId, text) => {
-//   request({
-//     url: "https://graph.facebook.com/v2.6/me/messages",
-//     qs: { access_token: FACEBOOK_ACCESS_TOKEN },
-//     method: "POST",
-//     json: {
-//       recipient: { id: senderId },
-//       message: { text },
-//     }
-//   }, function(error, response, body) {
-//     if (error) {
-//       console.log("Error sending message: " + response.error);
-//     }
-//   });
-// };
+const sendQuickReply = (senderId, msg) => {
+  request({
+    url: "https://graph.facebook.com/v2.6/me/messages",
+    qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+    method: "POST",
+    json: {
+      recipient: { id: senderId },
+      messaging_type: "RESPONSE",
+      message: msg,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log("Error sending message: " + response.error);
+    }
+  });
+};
 
 const sendMessage = (senderId, msg) => {
   request({
@@ -106,35 +107,29 @@ module.exports = (event) => {
 
               console.log("Dairy count is greater than 0");
               var drop_msg = {
-                  "attachment": {
-                    "type": "template",
-                    "payload": {
-                      "template_type": "button",
-                      "text":"Choose one",
-                        "buttons": [{
-                          "type": "postback",
-                          "title": "Expiration",
-                          "payload": "Exp"
-                        }, {
-                          "type": "postback",
-                          "title": "Nutrition",
-                          "payload": "Nut"
-                        }, {
-                          "type": "postback",
-                          "title": "Deals",
-                          "payload": "Deal"
-                        }
-//                                     , {
-//                           "type": "postback",
-//                           "title": "Recipes/Cooking",
-//                           "payload": "Rec"
-//                         }
-                                   ]
-                    }
+                "text": "Pick a color:",
+                "quick_replies":[
+                  {
+                    "content_type":"text",
+                    "title":"Expiration",
+                    "payload":"Exp"
+                  },{
+                    "content_type":"text",
+                    "title":"Nutrition",
+                    "payload":"Nut"
+                  },{
+                    "content_type":"text",
+                    "title":"Recipes/Cooking",
+                    "payload":"Rec"
+                  },{
+                    "content_type":"text",
+                    "title":"Deals",
+                    "payload":"Deal"
                   }
-                };
-                // sendMessage(senderId,{text: "These are the results of your query: "+dairyvals[d]+"."});
-                sendMessage(senderId, drop_msg);
+                ]
+              };
+              // sendMessage(senderId,{text: "These are the results of your query: "+dairyvals[d]+"."});
+              sendQuickReply(senderId, drop_msg);
             }
           });
 
@@ -153,35 +148,29 @@ module.exports = (event) => {
 
               console.log("Prod count is greater than 0");
               var drop_msg = {
-                  "attachment": {
-                    "type": "template",
-                    "payload": {
-                      "template_type": "button",
-                      "text":"Choose one",
-                        "buttons": [{
-                          "type": "postback",
-                          "title": "Expiration",
-                          "payload": "Exp"
-                        }, {
-                          "type": "postback",
-                          "title": "Nutrition",
-                          "payload": "Nut"
-                        }, {
-                          "type": "postback",
-                          "title": "Deals",
-                          "payload": "Deal"
-                        }
-//                                     , {
-//                           "type": "postback",
-//                           "title": "Recipes/Cooking",
-//                           "payload": "Rec"
-//                         }
-                                   ]
-                    }
+                "text": "Pick a color:",
+                "quick_replies":[
+                  {
+                    "content_type":"text",
+                    "title":"Expiration",
+                    "payload":"Exp"
+                  },{
+                    "content_type":"text",
+                    "title":"Nutrition",
+                    "payload":"Nut"
+                  },{
+                    "content_type":"text",
+                    "title":"Recipes/Cooking",
+                    "payload":"Rec"
+                  },{
+                    "content_type":"text",
+                    "title":"Deals",
+                    "payload":"Deal"
                   }
+                ]
               };
-            // sendMessage(senderId, {text:"These are the results of your query: "+prodvals[p]+"."});
-            sendMessage(senderId, drop_msg);
+              // sendMessage(senderId, {text:"These are the results of your query: "+prodvals[p]+"."});
+              sendQuickReply(senderId, drop_msg);
             }
           });
         }
