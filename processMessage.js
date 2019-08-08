@@ -178,8 +178,9 @@ module.exports = (event) => {
               sendQuickReply(senderId, drop_msg);
             }
           });
-        }
-      }else sendMessage(senderId, {text: "Query not found in database"});
+        }else sendMessage(senderId, {text: "Query not found in database"});
+
+      }
 
       if (entities.hasOwnProperty("dropdown_choice") && entities.dropdown_choice.length > 0) {
         if(entities.dropdown_choice[0].value != ""){
@@ -192,7 +193,7 @@ module.exports = (event) => {
           } else if (entities.dropdown_choice[0].value === "Recipes") {
             console.log("Wit_food is "+wit_food);
             sendMessage(senderId, {text: ("Recipes for "+wit_food)});
-            window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re")
+            global.window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re")
           }
         }
       }
