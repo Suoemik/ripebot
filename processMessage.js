@@ -76,16 +76,6 @@ module.exports = (event) => {
   if(message){
     console.log("SK: sender ID is "+senderId);
 
-    if (message === "Exp") {
-      sendMessage(senderId, {text: "Expiration Date"});
-    } else if (message === "Nut") {
-      sendMessage(senderId, {text: "Nutrition Information"});
-    } else if (message === "Deal") {
-      sendMessage(senderId, {text: "Deals"});
-    } else if (message === "Rec") {
-      sendMessage(senderId, {text: "Recipes or Cooking Information"});
-    }
-  
     wit.message(message).then(({entities}) => {
       // You can customize your response to these entities
 
@@ -93,14 +83,19 @@ module.exports = (event) => {
       // console.log(entities);
       console.log(entities);
       // For now, let's reply with another automatic message
+      let wit_food = "";
+      let fire_food = "";
       if(entities.hasOwnProperty("greetings") && entities.greetings.length > 0){
         if(entities.greetings[0].value == "true"){
           console.log("Hi there! What grocery item would you like to know about?");
           sendMessage(senderId, {text: "Hi there! What grocery item would you like to know about?"});
         }
-      }else if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
+      }
+      if(entities.hasOwnProperty("food_type") && entities.food_type.length > 0){
         if(entities.food_type[0].value != ""){
           // sendMessage(senderId, {text: "These are the results of your query: "+entities.food_type[0].value+"."});
+
+          wit_food = entities.food_type[0].value;
 
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
@@ -185,6 +180,21 @@ module.exports = (event) => {
           });
         }
       }else sendMessage(senderId, {text: "Query not found in database"});
+      
+      if (entities.hasOwnProperty("dropdown_choice") && entities.dropdown_choice.length > 0) {
+        if(entities.dropdown_choice[0].value != ""){
+          if (entities.dropdown_choice[0].value === "Expiration") {
+            sendMessage(senderId, {text: "Expiration Date"});
+          } else if (entities.dropdown_choice[0].value === "Nutrition") {
+            sendMessage(senderId, {text: "Nutrition Information"});
+          } else if (entities.dropdown_choice[0].value === "Deals") {
+            sendMessage(senderId, {text: "Deals"});
+          } else if (entities.dropdown_choice[0].value === "Recipes") {
+            sendMessage(senderId, {text: ("Recipes for "+wit_food)});
+            window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re")
+          }
+        }
+      }
     })
     .catch((err) => {
       console.error("Oops! Got an error from Wit: ", err.stack || err);
