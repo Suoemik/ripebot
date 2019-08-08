@@ -22,6 +22,9 @@ var dairyvals = null;
 const proddict = db.ref('Produce');
 var prodvals = null;
 
+var wit_food = "";
+var fire_food = "";
+
 dairydict.once("value").then(function(snapshot) {
   dairyvals = snapshot.val();
   // for(var d in dairyvals){
@@ -76,8 +79,6 @@ const sendMessage = (senderId, msg) => {
 module.exports = (event) => {
   const senderId = event.sender.id;
   const message = event.message.text;
-  var wit_food = "";
-  var fire_food = "";
   if(message){
     console.log("SK: sender ID is "+senderId);
 
@@ -138,7 +139,7 @@ module.exports = (event) => {
                 ]
               };
               // sendMessage(senderId,{text: "These are the results of your query: "+dairyvals[d]+"."});
-              sendQuickReply(senderId, drop_msg);
+              sendMessage(senderId, drop_msg);
             }
           });
 
@@ -179,7 +180,7 @@ module.exports = (event) => {
                 ]
               };
               // sendMessage(senderId, {text:"These are the results of your query: "+prodvals[p]+"."});
-              sendQuickReply(senderId, drop_msg);
+              sendMessage(senderId, drop_msg);
             }
           });
         }else sendMessage(senderId, {text: "Query not found in database"});
