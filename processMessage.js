@@ -76,7 +76,8 @@ const sendMessage = (senderId, msg) => {
 module.exports = (event) => {
   const senderId = event.sender.id;
   const message = event.message.text;
-
+  var wit_food = "";
+  var fire_food = "";
   if(message){
     console.log("SK: sender ID is "+senderId);
 
@@ -87,8 +88,7 @@ module.exports = (event) => {
       // console.log(entities);
       console.log(entities);
       // For now, let's reply with another automatic message
-      var wit_food = "";
-      var fire_food = "";
+
       if(entities.hasOwnProperty("greetings") && entities.greetings.length > 0){
         if(entities.greetings[0].value == "true"){
           console.log("Hi there! What grocery item would you like to know about?");
@@ -197,7 +197,7 @@ module.exports = (event) => {
           } else if (entities.dropdown_choice[0].value === "Recipes") {
             console.log("Wit_food is "+wit_food);
             sendMessage(senderId, {text: ("Recipes for "+wit_food)});
-            
+
             dom.window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re");
           }
         }
