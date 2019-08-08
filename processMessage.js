@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const API_AI_TOKEN = "4L7IL5ZCVETHWLHZAYM5QM5ODXW3PQRW";
 const apiAiClient = API_AI_TOKEN;
 const FACEBOOK_ACCESS_TOKEN = "EAAiBKzzP6RwBAGddy8vEovhklyPnUNFGv7JMh61JZA2lfxIbaeVpN0MmDZBQuwXSZBZBx3b82WXTcddDwgL1k4hnZBoYyWyIxOZAuWDjfljXGF1tkZBZCF6TdH2bbGNrYjAX0Arvp5d49FIrsmZA8CUnaYBG85ZAe0EPFREurqhOYqSiS0GdFhCCiLPwtcvTsZCgkMZD";
@@ -6,11 +8,13 @@ const {Wit, log} = require('node-wit');
 const interactive = require('node-wit').interactive;
 const firebase = require('firebase-admin');
 const servacc = require('./ripe-website-firebase-adminsdk-jj6qe-a38bc3f7ca-2.json');
-
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const dom = new JSDOM('');
 const fireapp = firebase.initializeApp({
   databaseURL: "https://ripe-website.firebaseio.com", // Realtime Database
   credential: firebase.credential.cert(servacc)
-})
+});
 
 const db = firebase.database();
 const dairydict = db.ref('Dairy');
@@ -83,8 +87,8 @@ module.exports = (event) => {
       // console.log(entities);
       console.log(entities);
       // For now, let's reply with another automatic message
-      let wit_food = "";
-      let fire_food = "";
+      var wit_food = "";
+      var fire_food = "";
       if(entities.hasOwnProperty("greetings") && entities.greetings.length > 0){
         if(entities.greetings[0].value == "true"){
           console.log("Hi there! What grocery item would you like to know about?");
@@ -193,14 +197,15 @@ module.exports = (event) => {
           } else if (entities.dropdown_choice[0].value === "Recipes") {
             console.log("Wit_food is "+wit_food);
             sendMessage(senderId, {text: ("Recipes for "+wit_food)});
-            global.window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re")
+            
+            dom.window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re");
           }
         }
       }
     })
     .catch((err) => {
       console.error("Oops! Got an error from Wit: ", err.stack || err);
-    })
+    });
   }
 };
 //interactive(wit);
