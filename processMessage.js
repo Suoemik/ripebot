@@ -8,9 +8,7 @@ const {Wit, log} = require('node-wit');
 const interactive = require('node-wit').interactive;
 const firebase = require('firebase-admin');
 const servacc = require('./ripe-website-firebase-adminsdk-jj6qe-a38bc3f7ca-2.json');
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const dom = new JSDOM('');
+const open = require('open');
 const fireapp = firebase.initializeApp({
   databaseURL: "https://ripe-website.firebaseio.com", // Realtime Database
   credential: firebase.credential.cert(servacc)
@@ -199,7 +197,7 @@ module.exports = (event) => {
             console.log("Wit_food is "+wit_food);
             sendMessage(senderId, {text: ("Recipes for "+wit_food)});
 
-            dom.window.open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re");
+            open("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re");
           }
         }
       }
