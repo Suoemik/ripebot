@@ -23,6 +23,8 @@ var prodvals = null;
 
 var wit_food = "";
 var fire_food = "";
+var fire_food_arr = [];
+var fire_food_cnt = 0;
 
 dairydict.once("value").then(function(snapshot) {
   dairyvals = snapshot.val();
@@ -78,6 +80,7 @@ const sendMessage = (senderId, msg) => {
 module.exports = (event) => {
   const senderId = event.sender.id;
   const message = event.message.text;
+  const quick_res = event.message.quick_reply;
   if(message){
     console.log("SK: sender ID is "+senderId);
 
@@ -103,111 +106,179 @@ module.exports = (event) => {
 
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
-            var count = 0;
+            var dairy_elems = [];
+            fire_food = 0;
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-                count++;
+                let elem = {
+                  "title": d,
+                  "buttons": [
+                   {
+                     "title": "Go",
+                     "type": "postback",
+                     "payload": "Go_"+d
+                   }
+                 ]
+                };
+                fire_food_arr.push(dairyvals[d]);
+                dairy_elems.push(elem);
+                fire_food_cnt++;
               }
             }
             console.log("Dairy count is: "+count);
 
-            if(count > 0){
+            if(fire_food_cnt > 0){
+              var list_msg = {
+                "attachment": {
+                  "type": "template",
+                  "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": prod_elems
+                  }
+                }
+              };
 
               console.log("Dairy count is greater than 0");
-              var drop_msg = {
-                "text": "Choose one:",
-                "quick_replies":[
-                  {
-                    "content_type":"text",
-                    "title":"Expiration",
-                    "payload":"Exp"
-                  },{
-                    "content_type":"text",
-                    "title":"Nutrition",
-                    "payload":"Nut"
-                  },{
-                    "content_type":"text",
-                    "title":"Recipes/Cooking",
-                    "payload":"Rec"
-                  },{
-                    "content_type":"text",
-                    "title":"Deals",
-                    "payload":"Deal"
-                  }
-                ]
-              };
-              // sendMessage(senderId,{text: "These are the results of your query: "+dairyvals[d]+"."});
-              sendMessage(senderId, drop_msg);
+
+              sendMessage(senderId,{text: "Choose one:"});
+              sendMessage(senderId, list_msg);
             }
           });
 
           proddict.once("value").then(function(snapshot) {
             prodvals = snapshot.val();
-            var count = 0;
+            var prod_elems = [];
+            fire_food_cnt = 0;
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
-                count++;
+                let elem = {
+                  "title": p,
+                  "buttons": [
+                   {
+                     "title": "Go",
+                     "type": "postback",
+                     "payload": "Go_"+p
+                   }
+                 ]
+                };
+                fire_food_arr.push(prodvals[p]);
+                prod_elems.push(elem);
+                fire_food_cnt++;
               }
             }
-            console.log("Prod count is: "+count);
+            console.log("Prod count is: "+fire_food_cnt);
 
-            if(count > 0){
-
-              console.log("Prod count is greater than 0");
-              var drop_msg = {
-                "text": "Choose one:",
-                "quick_replies":[
-                  {
-                    "content_type":"text",
-                    "title":"Expiration",
-                    "payload":"Exp"
-                  },{
-                    "content_type":"text",
-                    "title":"Nutrition",
-                    "payload":"Nut"
-                  },{
-                    "content_type":"text",
-                    "title":"Recipes/Cooking",
-                    "payload":"Rec"
-                  },{
-                    "content_type":"text",
-                    "title":"Deals",
-                    "payload":"Deal"
+            if(fire_food_cnt > 0){
+              var list_msg = {
+                "attachment": {
+                  "type": "template",
+                  "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": prod_elems
                   }
-                ]
+                }
               };
-              // sendMessage(senderId, {text:"These are the results of your query: "+prodvals[p]+"."});
-              sendMessage(senderId, drop_msg);
+              console.log("Prod count is greater than 0");
+
+              sendMessage(senderId,{text: "Choose one:"});
+              sendMessage(senderId, list_msg);
             }
           });
         }else sendMessage(senderId, {text: "Query not found in database"});
 
       }
 
-      if (entities.hasOwnProperty("dropdown_choice") && entities.dropdown_choice.length > 0) {
-        if(entities.dropdown_choice[0].value != ""){
-          if (entities.dropdown_choice[0].value === "Expiration") {
-            sendMessage(senderId, {text: "Expiration Date"});
-          } else if (entities.dropdown_choice[0].value === "Nutrition") {
-            sendMessage(senderId, {text: "Nutrition Information"});
-          } else if (entities.dropdown_choice[0].value === "Deals") {
-            sendMessage(senderId, {text: "Deals"});
-          } else if (entities.dropdown_choice[0].value === "Recipes") {
-            console.log("Wit_food is "+wit_food);
-            sendMessage(senderId, {text: ("Recipes for "+wit_food)});
-            app.get('/', function (req, res) {
-              res.redirect("https://www.allrecipes.com/search/results/?wt="+wit_food+"&sort=re");
-            });
-
-          }
-        }
-      }
+      // if (entities.hasOwnProperty("dropdown_choice") && entities.dropdown_choice.length > 0) {
+      //   if(entities.dropdown_choice[0].value != ""){
+      //     if (entities.dropdown_choice[0].value === "Expiration") {
+      //       sendMessage(senderId, {text: "Expiration Date"});
+      //     } else if (entities.dropdown_choice[0].value === "Nutrition") {
+      //       sendMessage(senderId, {text: "Nutrition Information"});
+      //     } else if (entities.dropdown_choice[0].value === "Deals") {
+      //       sendMessage(senderId, {text: "Deals"});
+      //     } else if (entities.dropdown_choice[0].value === "Recipes") {
+      //       console.log("Wit_food is "+wit_food);
+      //       sendMessage(senderId, {text: ("Recipes for "+wit_food)});
+      //     }
+      //   }
+      // }
     })
     .catch((err) => {
       console.error("Oops! Got an error from Wit: ", err.stack || err);
     });
+  }
+  if(quick_res){
+    var quick_pay = quick_res.payload;
+
+    if(quick_pay){
+      fire_food = item = payload.split("_")[1];
+      let fire_food_info = fire_food_arr.filter((el)=>{
+        el["Item"] == fire_food;
+      });
+      var exp_msg = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements": [
+              {
+                "title": "Counter or Pantry",
+                "subtitle": fire_food["Counter or Pantry"]
+              },{
+                "title": "Refrigerator",
+                "subtitle": fire_food["Refrigerator"]
+              },{
+                "title": "Freezer",
+                "subtitle": fire_food["Freezer"]
+              },{
+                "title": "Post Prinited Expiration date",
+                "subtitle": fire_food["Post Prinited Expiration date"]
+              }
+            ]
+          }
+        }
+      };
+
+      if (quick_pay.includes("Exp")) {
+        sendMessage(senderId, {text: "Expiration Information"});
+        sendMessage(senderId, exp_msg);
+
+      } else if (quick_pay.includes("Nut")) {
+        sendMessage(senderId, {text: "Nutrition Information"});
+      } else if (quick_pay.includes("Deal")) {
+        sendMessage(senderId, {text: "Deals"});
+      } else if (quick_pay.includes("Rec")) {
+        var rec_msg = {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text":"Would you like to",
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://www.allrecipes.com/search/results/?wt="+fire_food+"&sort=re",
+                  "title":"See all recipes",
+                  "webview_height_ratio": "full"
+                },
+                {
+                  "title": "Find specific recipe",
+                  "type": "postback",
+                  "payload": "Rec_Search_"+fire_food
+                }
+              ]
+            }
+          }
+        };
+
+        sendMessage(senderId, rec_msg);
+      }
+    }
   }
 };
 //interactive(wit);
