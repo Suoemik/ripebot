@@ -144,6 +144,7 @@ module.exports = (event) => {
 
               console.log("Dairy count is greater than 0");
               console.log(list_msg);
+              console.log(dairy_elems);
 
               sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
@@ -188,6 +189,7 @@ module.exports = (event) => {
               };
               console.log("Prod count is greater than 0");
               console.log(list_msg);
+              console.log(prod_elems);
 
               sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
