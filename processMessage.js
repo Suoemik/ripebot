@@ -107,7 +107,8 @@ module.exports = (event) => {
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
             var dairy_elems = [];
-            fire_food = 0;
+            fire_food_cnt = 0;
+
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -127,6 +128,7 @@ module.exports = (event) => {
               }
             }
             console.log("Dairy count is: "+fire_food_cnt);
+            console.log("Prod count is: "+dairy_elems.length);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -135,12 +137,13 @@ module.exports = (event) => {
                   "payload": {
                     "template_type": "list",
                     "top_element_style": "compact",
-                    "elements": prod_elems
+                    "elements": dairy_elems
                   }
                 }
               };
 
               console.log("Dairy count is greater than 0");
+              console.log(list_msg);
 
               sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
@@ -170,6 +173,7 @@ module.exports = (event) => {
               }
             }
             console.log("Prod count is: "+fire_food_cnt);
+            console.log("Prod count is: "+prod_elems.length);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -183,6 +187,7 @@ module.exports = (event) => {
                 }
               };
               console.log("Prod count is greater than 0");
+              console.log(list_msg);
 
               sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
