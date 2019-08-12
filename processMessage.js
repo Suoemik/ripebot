@@ -126,7 +126,7 @@ module.exports = (event) => {
                 fire_food_cnt++;
               }
             }
-            console.log("Dairy count is: "+count);
+            console.log("Dairy count is: "+fire_food_cnt);
 
             if(fire_food_cnt > 0){
               var list_msg = {
