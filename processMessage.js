@@ -9,7 +9,7 @@ const interactive = require('node-wit').interactive;
 const firebase = require('firebase-admin');
 const servacc = require('./ripe-website-firebase-adminsdk-jj6qe-a38bc3f7ca-2.json');
 const open = require('open');
-const app = express();
+
 const fireapp = firebase.initializeApp({
   databaseURL: "https://ripe-website.firebaseio.com", // Realtime Database
   credential: firebase.credential.cert(servacc)
