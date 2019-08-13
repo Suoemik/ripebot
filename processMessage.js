@@ -149,16 +149,18 @@ module.exports = (event) => {
               
               if(fire_food_cnt > 10){
                 sendMessage(senderId, {text: "Choose one:"});
-                for(let i = 0; i < list_msg.attachment.payload.elements.length; i+=10){
+                for(let i = 0; i < dairy_elems.length; i+=10){
                   var split_msg = {
                     "attachment":{
                       "type":"template",
                       "payload":{
                         "template_type":"generic",
-                        "elements": list_msg.attachment.payload.elements.slice(i,i+10)
+                        "elements": dairy_elems.slice(i,i+10)
                       }
                     }
                   };
+                  console.log("dairy_elems.slice(i,i+10)");
+                  console.log(dairy_elems.slice(i,i+10));
                   sendMessage(senderId, split_msg);
                 }
               }else{
@@ -212,16 +214,18 @@ module.exports = (event) => {
             if(fire_food_cnt > 0){
               if(fire_food_cnt > 10){
                 sendMessage(senderId, {text: "Choose one:"});
-                for(let i = 0; i < list_msg.attachment.payload.elements.length; i+=10){
+                for(let i = 0; i < prod_elems.length; i+=10){
                   var split_msg = {
                     "attachment":{
                       "type":"template",
                       "payload":{
                         "template_type":"generic",
-                        "elements": list_msg.attachment.payload.elements.slice(i,i+10)
+                        "elements": prod_elems.slice(i,i+10)
                       }
                     }
                   };
+                  console.log("prod_elems.slice(i,i+10)");
+                  console.log(prod_elems.slice(i,i+10));
                   sendMessage(senderId, split_msg);
                 }
               }else{
