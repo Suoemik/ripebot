@@ -130,7 +130,7 @@ module.exports = (event) => {
               }
             }
             console.log("Dairy count is: "+fire_food_cnt);
-            console.log("Prod count is: "+dairy_elems.length);
+            console.log("Dairy elem is: "+dairy_elems);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -178,7 +178,7 @@ module.exports = (event) => {
               }
             }
             console.log("Prod count is: "+fire_food_cnt);
-            console.log("Prod count is: "+prod_elems.length);
+            console.log("Prod elem is: "+prod_elems);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -226,10 +226,15 @@ module.exports = (event) => {
     var quick_pay = quick_res.payload;
 
     if(quick_pay){
-      fire_food = item = payload.split("_")[1];
+      console.log("quick_pay = "+quick_pay);
+
+      fire_food = payload.split("_")[1];
+      console.log("fire_food = "+fire_food);
       let fire_food_info = fire_food_arr.filter((el)=>{
-        el["Item"] == fire_food;
+       return  el["Item"] == fire_food;
       });
+      console.log("fire_food_info = "+fire_food_info);
+
       var exp_msg = {
         "attachment": {
           "type": "template",
@@ -239,16 +244,16 @@ module.exports = (event) => {
             "elements": [
               {
                 "title": "Counter or Pantry",
-                "subtitle": fire_food["Counter or Pantry"]
+                "subtitle": fire_food_info["Counter or Pantry"]
               },{
                 "title": "Refrigerator",
-                "subtitle": fire_food["Refrigerator"]
+                "subtitle": fire_food_info["Refrigerator"]
               },{
                 "title": "Freezer",
-                "subtitle": fire_food["Freezer"]
+                "subtitle": fire_food_info["Freezer"]
               },{
                 "title": "Post Prinited Expiration date",
-                "subtitle": fire_food["Post Prinited Expiration date"]
+                "subtitle": fire_food_info["Post Prinited Expiration date"]
               }
             ]
           }
