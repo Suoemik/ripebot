@@ -130,7 +130,8 @@ module.exports = (event) => {
               }
             }
             console.log("Dairy count is: "+fire_food_cnt);
-            console.log("Dairy elem is: "+dairy_elems);
+            console.log("Dairy elem is: ");
+            console.log(dairy_elems);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -146,7 +147,6 @@ module.exports = (event) => {
 
               console.log("Dairy count is greater than 0");
               console.log(list_msg);
-              console.log(dairy_elems);
 
               // sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
@@ -178,7 +178,8 @@ module.exports = (event) => {
               }
             }
             console.log("Prod count is: "+fire_food_cnt);
-            console.log("Prod elem is: "+prod_elems);
+            console.log("Prod elem is: ");
+            console.log(prod_elems);
 
             if(fire_food_cnt > 0){
               var list_msg = {
@@ -193,7 +194,6 @@ module.exports = (event) => {
               };
               console.log("Prod count is greater than 0");
               console.log(list_msg);
-              console.log(prod_elems);
 
               // sendMessage(senderId,{text: "Choose one:"});
               sendMessage(senderId, list_msg);
