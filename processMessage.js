@@ -142,7 +142,10 @@ module.exports = (event) => {
             console.log("Dairy count is: "+fire_food_cnt);
             console.log("Dairy elem is: ");
             console.log(dairy_elems);
-
+            
+            console.log("Dairy fire_food_arr is: ");
+            console.log(fire_food_arr);
+            
             if(fire_food_cnt > 0){
               console.log("Dairy count is greater than 0");
               
@@ -209,6 +212,9 @@ module.exports = (event) => {
             console.log("Prod count is: "+fire_food_cnt);
             console.log("Prod elem is: ");
             console.log(prod_elems);
+            
+            console.log("Prod fire_food_arr is: ");
+            console.log(fire_food_arr);
 
             if(fire_food_cnt > 0){
               if(fire_food_cnt > 10){
@@ -303,7 +309,7 @@ module.exports = (event) => {
       if (quick_pay.includes("Exp")) {
         sendMessage(senderId, {text: "Expiration Information"});
         sendMessage(senderId, exp_msg);
-
+        //fire_food_arr = [];
       } else if (quick_pay.includes("Nut")) {
         sendMessage(senderId, {text: "Nutrition Information"});
       } else if (quick_pay.includes("Deal")) {
@@ -334,8 +340,7 @@ module.exports = (event) => {
 
         sendMessage(senderId, rec_msg);
       }
-      
-            fire_food_arr = [];
+
     }
   }
 };
