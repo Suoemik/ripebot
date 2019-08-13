@@ -230,7 +230,7 @@ module.exports = (event) => {
     if(quick_pay){
       console.log("quick_pay = "+quick_pay);
 
-      fire_food = payload.split("_")[1];
+      fire_food = quick_pay.split("_")[1];
       console.log("fire_food = "+fire_food);
       let fire_food_info = fire_food_arr.filter((el)=>{
        return  el["Item"] == fire_food;
