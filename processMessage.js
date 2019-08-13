@@ -270,8 +270,8 @@ module.exports = (event) => {
       console.log("fire_food_arr = ");
       console.log(fire_food_arr);
       
-      let fire_food_info = fire_food_arr.filter((el)=>{
-       return  el["Item"] == fire_food;
+      let fire_food_info = fire_food_arr.find(function (el) {
+       return el["Item"].trim() == fire_food;
       });
       console.log("fire_food_info = ");
       console.log(fire_food_info);
