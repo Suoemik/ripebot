@@ -117,7 +117,6 @@ module.exports = (event) => {
               }
             };
             fire_food_cnt = 0;
-            fire_food_arr = [];
             
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
@@ -185,7 +184,7 @@ module.exports = (event) => {
               }
             };
             fire_food_cnt = 0;
-            fire_food_arr = [];
+          
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -335,6 +334,8 @@ module.exports = (event) => {
 
         sendMessage(senderId, rec_msg);
       }
+      
+            fire_food_arr = [];
     }
   }
 };
