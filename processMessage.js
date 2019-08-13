@@ -131,8 +131,8 @@ module.exports = (event) => {
                    }
                  ]
                 };
-                console.log(elem);
-                console.log(elem.buttons);
+//                 console.log(elem);
+//                 console.log(elem.buttons);
                 fire_food_arr.push(dairyvals[d]);
                 list_msg.attachment.payload.elements.push(elem);
                 dairy_elems.push(elem);
@@ -180,8 +180,8 @@ module.exports = (event) => {
                    }
                  ]
                 };
-                console.log(elem);
-                console.log(elem.buttons);
+//                 console.log(elem);
+//                 console.log(elem.buttons);
                 fire_food_arr.push(prodvals[p]);
                 list_msg.attachment.payload.elements.push(elem);
                 prod_elems.push(elem);
@@ -232,10 +232,15 @@ module.exports = (event) => {
 
       fire_food = quick_pay.split("_")[1];
       console.log("fire_food = "+fire_food);
+      
+      console.log("fire_food_arr = ");
+      console.log(fire_food_arr);
+      
       let fire_food_info = fire_food_arr.filter((el)=>{
        return  el["Item"] == fire_food;
       });
-      console.log("fire_food_info = "+fire_food_info);
+      console.log("fire_food_info = ");
+      console.log(fire_food_info);
 
       var exp_msg = {
         "attachment":{
