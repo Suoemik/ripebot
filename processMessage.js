@@ -108,12 +108,11 @@ module.exports = (event) => {
             dairyvals = snapshot.val();
             var dairy_elems = [];
             var list_msg = {
-              "attachment": {
-                "type": "template",
-                "payload": {
-                  "template_type": "list",
-                  "top_element_style": "compact",
-                  "elements": dairy_elems
+              "attachment":{
+                "type":"template",
+                "payload":{
+                  "template_type":"generic",
+                  "elements": []
                 }
               }
             };
@@ -158,11 +157,10 @@ module.exports = (event) => {
             prodvals = snapshot.val();
             var prod_elems = [];
             var list_msg = {
-              "attachment": {
-                "type": "template",
-                "payload": {
-                  "template_type": "list",
-                  "top_element_style": "compact",
+              "attachment":{
+                "type":"template",
+                "payload":{
+                  "template_type":"generic",
                   "elements": []
                 }
               }
