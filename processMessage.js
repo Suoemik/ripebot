@@ -117,7 +117,8 @@ module.exports = (event) => {
               }
             };
             fire_food_cnt = 0;
-
+            fire_food_arr = [];
+            
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -144,12 +145,28 @@ module.exports = (event) => {
             console.log(dairy_elems);
 
             if(fire_food_cnt > 0){
-
               console.log("Dairy count is greater than 0");
-              console.log(list_msg);
+              
+              if(fire_food_cnt > 10){
+                sendMessage(senderId, {text: "Choose one:"});
+                for(let i = 0; i < list_msg.attachment.payload.elements.length; i+=10){
+                  var split_msg = {
+                    "attachment":{
+                      "type":"template",
+                      "payload":{
+                        "template_type":"generic",
+                        "elements": list_msg.attachment.payload.elements.slice(i,i+10)
+                      }
+                    }
+                  };
+                  sendMessage(senderId, split_msg);
+                }
+              }else{
+                console.log(list_msg);
 
-              sendMessage(senderId,{text: "Choose one:"});
-              sendMessage(senderId, list_msg);
+                sendMessage(senderId,{text: "Choose one:"});
+                sendMessage(senderId, list_msg);
+              }
             }
           });
 
@@ -166,7 +183,7 @@ module.exports = (event) => {
               }
             };
             fire_food_cnt = 0;
-
+            fire_food_arr = [];
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -193,12 +210,26 @@ module.exports = (event) => {
             console.log(prod_elems);
 
             if(fire_food_cnt > 0){
+              if(fire_food_cnt > 10){
+                sendMessage(senderId, {text: "Choose one:"});
+                for(let i = 0; i < list_msg.attachment.payload.elements.length; i+=10){
+                  var split_msg = {
+                    "attachment":{
+                      "type":"template",
+                      "payload":{
+                        "template_type":"generic",
+                        "elements": list_msg.attachment.payload.elements.slice(i,i+10)
+                      }
+                    }
+                  };
+                  sendMessage(senderId, split_msg);
+                }
+              }else{
+                console.log(list_msg);
 
-              console.log("Prod count is greater than 0");
-              console.log(list_msg);
-
-              sendMessage(senderId,{text: "Choose one:"});
-              sendMessage(senderId, list_msg);
+                sendMessage(senderId,{text: "Choose one:"});
+                sendMessage(senderId, list_msg);
+              }
             }
           });
         }else sendMessage(senderId, {text: "Query not found in database"});
@@ -265,7 +296,7 @@ module.exports = (event) => {
           }
         }
       };
-
+      console.log(exp_msg);
       if (quick_pay.includes("Exp")) {
         sendMessage(senderId, {text: "Expiration Information"});
         sendMessage(senderId, exp_msg);
