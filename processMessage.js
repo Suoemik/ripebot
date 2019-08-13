@@ -107,6 +107,16 @@ module.exports = (event) => {
           dairydict.once("value").then(function(snapshot) {
             dairyvals = snapshot.val();
             var dairy_elems = [];
+            var list_msg = {
+              "attachment": {
+                "type": "template",
+                "payload": {
+                  "template_type": "list",
+                  "top_element_style": "compact",
+                  "elements": dairy_elems
+                }
+              }
+            };
             fire_food_cnt = 0;
 
             for(var d in dairyvals){
@@ -125,6 +135,7 @@ module.exports = (event) => {
                 console.log(elem);
                 console.log(elem.buttons);
                 fire_food_arr.push(dairyvals[d]);
+                list_msg.attachment.payload.elements.push(elem);
                 dairy_elems.push(elem);
                 fire_food_cnt++;
               }
@@ -134,16 +145,6 @@ module.exports = (event) => {
             console.log(dairy_elems);
 
             if(fire_food_cnt > 0){
-              var list_msg = {
-                "attachment": {
-                  "type": "template",
-                  "payload": {
-                    "template_type": "list",
-                    "top_element_style": "compact",
-                    "elements": dairy_elems
-                  }
-                }
-              };
 
               console.log("Dairy count is greater than 0");
               console.log(list_msg);
@@ -156,7 +157,18 @@ module.exports = (event) => {
           proddict.once("value").then(function(snapshot) {
             prodvals = snapshot.val();
             var prod_elems = [];
+            var list_msg = {
+              "attachment": {
+                "type": "template",
+                "payload": {
+                  "template_type": "list",
+                  "top_element_style": "compact",
+                  "elements": []
+                }
+              }
+            };
             fire_food_cnt = 0;
+
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -173,6 +185,7 @@ module.exports = (event) => {
                 console.log(elem);
                 console.log(elem.buttons);
                 fire_food_arr.push(prodvals[p]);
+                list_msg.attachment.payload.elements.push(elem);
                 prod_elems.push(elem);
                 fire_food_cnt++;
               }
@@ -182,16 +195,7 @@ module.exports = (event) => {
             console.log(prod_elems);
 
             if(fire_food_cnt > 0){
-              var list_msg = {
-                "attachment": {
-                  "type": "template",
-                  "payload": {
-                    "template_type": "list",
-                    "top_element_style": "compact",
-                    "elements": prod_elems
-                  }
-                }
-              };
+
               console.log("Prod count is greater than 0");
               console.log(list_msg);
 
