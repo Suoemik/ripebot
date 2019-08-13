@@ -122,6 +122,7 @@ module.exports = (event) => {
                    }
                  ]
                 };
+                console.log(elem);
                 fire_food_arr.push(dairyvals[d]);
                 dairy_elems.push(elem);
                 fire_food_cnt++;
@@ -168,6 +169,7 @@ module.exports = (event) => {
                    }
                  ]
                 };
+                console.log(elem);
                 fire_food_arr.push(prodvals[p]);
                 prod_elems.push(elem);
                 fire_food_cnt++;
