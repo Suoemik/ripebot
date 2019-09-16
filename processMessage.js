@@ -108,17 +108,16 @@ module.exports = (event) => {
             dairyvals = snapshot.val();
             var dairy_elems = [];
             var list_msg = {
-              "attachment": {
-                "type": "template",
-                "payload": {
-                  "template_type": "list",
-                  "top_element_style": "compact",
-                  "elements": dairy_elems
+              "attachment":{
+                "type":"template",
+                "payload":{
+                  "template_type":"generic",
+                  "elements": []
                 }
               }
             };
             fire_food_cnt = 0;
-
+            
             for(var d in dairyvals){
               if(d.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -132,8 +131,8 @@ module.exports = (event) => {
                    }
                  ]
                 };
-                console.log(elem);
-                console.log(elem.buttons);
+//                 console.log(elem);
+//                 console.log(elem.buttons);
                 fire_food_arr.push(dairyvals[d]);
                 list_msg.attachment.payload.elements.push(elem);
                 dairy_elems.push(elem);
@@ -143,14 +142,35 @@ module.exports = (event) => {
             console.log("Dairy count is: "+fire_food_cnt);
             console.log("Dairy elem is: ");
             console.log(dairy_elems);
-
+            
+            console.log("Dairy fire_food_arr is: ");
+            console.log(fire_food_arr);
+            
             if(fire_food_cnt > 0){
-
               console.log("Dairy count is greater than 0");
-              console.log(list_msg);
+              
+              if(fire_food_cnt > 10){
+                sendMessage(senderId, {text: "Choose one:"});
+                for(let i = 0; i < dairy_elems.length; i+=10){
+                  var split_msg = {
+                    "attachment":{
+                      "type":"template",
+                      "payload":{
+                        "template_type":"generic",
+                        "elements": dairy_elems.slice(i,i+10)
+                      }
+                    }
+                  };
+                  console.log("dairy_elems.slice(i,i+10)");
+                  console.log(dairy_elems.slice(i,i+10));
+                  sendMessage(senderId, split_msg);
+                }
+              }else{
+                console.log(list_msg);
 
-              // sendMessage(senderId,{text: "Choose one:"});
-              sendMessage(senderId, list_msg);
+                sendMessage(senderId,{text: "Choose one:"});
+                sendMessage(senderId, list_msg);
+              }
             }
           });
 
@@ -158,17 +178,16 @@ module.exports = (event) => {
             prodvals = snapshot.val();
             var prod_elems = [];
             var list_msg = {
-              "attachment": {
-                "type": "template",
-                "payload": {
-                  "template_type": "list",
-                  "top_element_style": "compact",
+              "attachment":{
+                "type":"template",
+                "payload":{
+                  "template_type":"generic",
                   "elements": []
                 }
               }
             };
             fire_food_cnt = 0;
-
+          
             for(var p in prodvals){
               if(p.toLowerCase().includes(entities.food_type[0].value.toLowerCase())){
                 console.log("These are the results of your query: "+entities.food_type[0].value);
@@ -182,8 +201,8 @@ module.exports = (event) => {
                    }
                  ]
                 };
-                console.log(elem);
-                console.log(elem.buttons);
+//                 console.log(elem);
+//                 console.log(elem.buttons);
                 fire_food_arr.push(prodvals[p]);
                 list_msg.attachment.payload.elements.push(elem);
                 prod_elems.push(elem);
@@ -193,14 +212,33 @@ module.exports = (event) => {
             console.log("Prod count is: "+fire_food_cnt);
             console.log("Prod elem is: ");
             console.log(prod_elems);
+            
+            console.log("Prod fire_food_arr is: ");
+            console.log(fire_food_arr);
 
             if(fire_food_cnt > 0){
+              if(fire_food_cnt > 10){
+                sendMessage(senderId, {text: "Choose one:"});
+                for(let i = 0; i < prod_elems.length; i+=10){
+                  var split_msg = {
+                    "attachment":{
+                      "type":"template",
+                      "payload":{
+                        "template_type":"generic",
+                        "elements": prod_elems.slice(i,i+10)
+                      }
+                    }
+                  };
+                  console.log("prod_elems.slice(i,i+10)");
+                  console.log(prod_elems.slice(i,i+10));
+                  sendMessage(senderId, split_msg);
+                }
+              }else{
+                console.log(list_msg);
 
-              console.log("Prod count is greater than 0");
-              console.log(list_msg);
-
-              // sendMessage(senderId,{text: "Choose one:"});
-              sendMessage(senderId, list_msg);
+                sendMessage(senderId,{text: "Choose one:"});
+                sendMessage(senderId, list_msg);
+              }
             }
           });
         }else sendMessage(senderId, {text: "Query not found in database"});
@@ -232,19 +270,23 @@ module.exports = (event) => {
     if(quick_pay){
       console.log("quick_pay = "+quick_pay);
 
-      fire_food = payload.split("_")[1];
+      fire_food = quick_pay.split("_")[1];
       console.log("fire_food = "+fire_food);
-      let fire_food_info = fire_food_arr.filter((el)=>{
-       return  el["Item"] == fire_food;
+      
+      console.log("fire_food_arr = ");
+      console.log(fire_food_arr);
+      
+      let fire_food_info = fire_food_arr.find(function (el) {
+       return el["Item"].trim() == fire_food;
       });
-      console.log("fire_food_info = "+fire_food_info);
+      console.log("fire_food_info = ");
+      console.log(fire_food_info);
 
       var exp_msg = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
             "elements": [
               {
                 "title": "Counter or Pantry",
@@ -263,11 +305,11 @@ module.exports = (event) => {
           }
         }
       };
-
+      console.log(exp_msg);
       if (quick_pay.includes("Exp")) {
         sendMessage(senderId, {text: "Expiration Information"});
         sendMessage(senderId, exp_msg);
-
+        //fire_food_arr = [];
       } else if (quick_pay.includes("Nut")) {
         sendMessage(senderId, {text: "Nutrition Information"});
       } else if (quick_pay.includes("Deal")) {
@@ -298,6 +340,7 @@ module.exports = (event) => {
 
         sendMessage(senderId, rec_msg);
       }
+
     }
   }
 };
