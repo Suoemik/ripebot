@@ -15,7 +15,7 @@
     "firebase": "^6.2.4",
     "firebase-admin": "^8.2.0",
     "http": "0.0.0",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "node-wit": "^5.0.0",
     "open": "^6.4.0",
     "request": "^2.88.0",
